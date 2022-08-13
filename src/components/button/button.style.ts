@@ -180,6 +180,7 @@ const ButtonStyle = styled.button((props: IButtonStyleProps) => ({
   '&.loading-button': {
     position: 'relative',
     boxShadow: 'none',
+    cursor: 'not-allowed',
     ':after': {
       content: '""',
       position: 'absolute',
@@ -220,13 +221,13 @@ const ButtonStyle = styled.button((props: IButtonStyleProps) => ({
         opacity: 1,
         animation: `${loaderProgression} 1.4s  cubic-bezier(0.86, 0, 0.07, 1) infinite `,
 
-        ':nth-child(1)': {
+        ':nth-of-type(1)': {
           animationDelay: '0',
         },
-        ':nth-child(2)': {
+        ':nth-of-type(2)': {
           animationDelay: ' 0.125s',
         },
-        ':nth-child(3)': {
+        ':nth-of-type(3)': {
           animationDelay: ' 0.25s',
         },
       },

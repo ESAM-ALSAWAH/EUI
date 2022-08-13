@@ -1,6 +1,6 @@
 {
   "name": "eui-component",
-  "version": "1.0.3",
+  "version": "0.0.5",
   "description": "This is Ui library",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/ESAM-ALSAWAH/EUI/issues"
   },
-  "homepage": "https://ui-ph6u6u6wj-esam-alsawah.vercel.app/",
+  "homepage": "https://ui-delta-ivory.vercel.app/button",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",

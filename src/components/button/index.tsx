@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect, useCallback, ReactNode } from 'react'
+
 import { ButtonStyle } from './button.style'
 import { IButtonProps } from './button.types'
 import clsx from 'clsx'
@@ -9,22 +10,25 @@ const withLoading = (Component: FC<IButtonProps>) => {
     loadingText,
     typeLoading = 'text',
     children,
+    style,
+    className,
     ...props
   }: {
     isLoading?: boolean
     loadingText?: string
+    style?: React.CSSProperties
+    className?: string
     children?: ReactNode
     typeLoading?: 'text' | 'spin' | 'dots' | 'spinwithtext'
   }) {
     return isLoading ? (
       <Component
         {...props}
+        aria-label="loading"
         hoverEffect={false}
         rippleEffect={false}
-        style={{
-          cursor: 'not-allowed',
-        }}
-        className="loading-button"
+        className={clsx('loading-button', className)}
+        style={style}
         onClick={(e) => false}
       >
         {typeLoading === 'text' && (
@@ -53,7 +57,9 @@ const withLoading = (Component: FC<IButtonProps>) => {
         )}
       </Component>
     ) : (
-      <Component {...props}>{children}</Component>
+      <Component className={className} style={style} {...props}>
+        {children}
+      </Component>
     )
   }
 }
@@ -63,18 +69,20 @@ const withLink = (Component: FC<IButtonProps>) => {
     href,
     as,
     target,
+    className,
     ...props
   }: {
     href?: string
     as?: 'link'
+    className?: string
     target?: '_blank' | '_self' | '_parent' | '_top'
   }) {
     return href && !!as ? (
       <a href={href} target={target}>
-        <Component {...props} />
+        <Component className={className} {...props} />
       </a>
     ) : (
-      <Component {...props} />
+      <Component className={className} {...props} />
     )
   }
 }
@@ -83,18 +91,25 @@ const withIcons = (Component: FC<IButtonProps>) => {
     startIcon,
     endIcon,
     children,
+    style,
+    className,
     ...props
   }: {
     startIcon?: ReactNode
     endIcon?: ReactNode
     children?: ReactNode
+    style?: React.CSSProperties
+    className?: string
   }) {
     return !startIcon && !endIcon ? (
-      <Component {...props}>{children}</Component>
+      <Component {...props} className={className} style={style}>
+        {children}
+      </Component>
     ) : (
       <Component
         {...props}
-        style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
+        className={className}
+        style={{ display: 'flex', alignItems: 'center', gap: '5px', ...style }}
       >
         {startIcon && startIcon} <div className="text-button"> {children}</div>
         {endIcon && endIcon}
@@ -108,6 +123,7 @@ const Component: FC<IButtonProps> = ({
   rippleEffect = true,
   animation = 'none',
   color,
+  style,
   textColor,
   size,
   children,
@@ -140,6 +156,7 @@ const Component: FC<IButtonProps> = ({
 
   return (
     <ButtonStyle
+      className={clsx(click && animation, className)}
       hoverEffect={hoverEffect}
       onClick={handleClick}
       color={color}
@@ -148,8 +165,8 @@ const Component: FC<IButtonProps> = ({
       size={size}
       animation={animation}
       type="button"
+      style={style}
       onAnimationEnd={() => setClick(false)}
-      className={clsx(click && animation, className)}
       {...restprops}
     >
       {rippleEffect && isRippling && (
@@ -166,6 +183,6 @@ const Component: FC<IButtonProps> = ({
     </ButtonStyle>
   )
 }
-export const Button: FC<IButtonProps> = withLoading(
-  withLink(withIcons(Component)),
+export const Button: FC<IButtonProps> = withIcons(
+  withLoading(withLink(Component)),
 )
