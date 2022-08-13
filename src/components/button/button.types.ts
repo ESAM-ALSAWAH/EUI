@@ -7,6 +7,11 @@ export interface IButtonProps
   rippleEffect?:boolean
   textColor?: string
   size?:'small'|'medium'|'large'|`${number}px`|`${number}em`|`${number}rem`
+  startIcon?:ReactNode
+  endIcon?:ReactNode
+  isLoading?:boolean
+  loadingText?:string
+  typeLoading?: 'text' | 'spin' | 'dots'|'spinwithtext'
   animation?:'none'|'default'|'scale'|'slide'
   variant?:'text'|'outline'|'contained'
   radius?: 'small' | 'medium' | 'large' | 'full'| 'none'| `${number}px`|`${number}em`|`${number}rem`|`${number}%`
@@ -14,9 +19,10 @@ export interface IButtonProps
   href?:string
   target?:'_blank'|'_self'|'_parent'|'_top'
   onClick?:(event:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>void
-  children?: ReactNode,
+  children?: ReactNode
 
 }
+
 export interface IButtonStyleProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:'text'|'outline'|'contained'

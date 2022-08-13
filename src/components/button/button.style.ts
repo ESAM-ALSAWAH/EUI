@@ -22,7 +22,20 @@ const BounceOut = keyframes`
     transform: scale(.9);
   }
 `
-
+const SpinAnimation = keyframes`
+  100%{
+    transform: rotate(360deg);
+  }
+`
+const loaderProgression = keyframes`
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+  30%, 60% {
+    opacity: 1;
+    transform: scale(1);
+}`
 const BgColor = {
   primary: '#1F8BE8',
   success: '#00C853',
@@ -92,6 +105,7 @@ const ButtonStyle = styled.button((props: IButtonStyleProps) => ({
   height: 'fit-content',
   width: 'fit-content',
   transition: 'transform 0.2s linear',
+
   ...(props['variant'] === 'contained' && {
     boxShadow:
       ' rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px',
@@ -103,6 +117,9 @@ const ButtonStyle = styled.button((props: IButtonStyleProps) => ({
     height: HEIGHT[props['size']] ? HEIGHT[props['size']] : props['size'],
   }),
 
+  '.text-button': {
+    fontSize: '13px',
+  },
   '&:hover': {
     ...(!!props['hoverEffect'] &&
       (props['variant'] === 'contained'
@@ -159,6 +176,61 @@ const ButtonStyle = styled.button((props: IButtonStyleProps) => ({
     borderRadius: ' 9999px',
     opacity: 1,
     animation: ` 1s ease 1 forwards ${RippleAnimation}`,
+  },
+  '&.loading-button': {
+    position: 'relative',
+    boxShadow: 'none',
+    ':after': {
+      content: '""',
+      position: 'absolute',
+      inset: 0,
+      backgroundColor: '#fff',
+      opacity: 0.35,
+    },
+    '.loading-spin , .loading-spin-with-text': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '10px',
+    },
+    '.spinner': {
+      width: '15px',
+      height: '15px',
+      borderRadius: '50%',
+      background: 'transparent',
+      borderTop: `2px solid ${
+        props['variant'] === 'contained'
+          ? '#fff'
+          : props['color'] && BgColor[props['color']]
+      }`,
+      animation: ` 1s linear  ${SpinAnimation} infinite`,
+    },
+    '.loading-spin .spinner': {
+      position: 'absolute',
+    },
+    '.loading-dots': {
+      textAlign: 'center',
+      '.dot': {
+        display: 'inline-block',
+        height: '8px',
+        width: '8px',
+        backgroundColor: '#fff',
+        margin: '0 2.5px',
+        borderRadius: ' 100px',
+        opacity: 1,
+        animation: `${loaderProgression} 1.4s  cubic-bezier(0.86, 0, 0.07, 1) infinite `,
+
+        ':nth-child(1)': {
+          animationDelay: '0',
+        },
+        ':nth-child(2)': {
+          animationDelay: ' 0.125s',
+        },
+        ':nth-child(3)': {
+          animationDelay: ' 0.25s',
+        },
+      },
+    },
   },
 }))
 
