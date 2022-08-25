@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useCallback, ReactNode } from 'react'
+import React, { FC, useState, useEffect, useCallback } from 'react'
 
 import { IconButtonStyle } from './IconButton.style'
 import { IconButtonProps } from './IconButton.types'
@@ -8,6 +8,8 @@ export const IconButton: FC<IconButtonProps> = ({
   hoverEffect = true,
   rippleEffect = true,
   animation = 'none',
+  durationAnimation = '3s',
+  variant = 'contained',
   color,
   style,
   textColor,
@@ -49,9 +51,12 @@ export const IconButton: FC<IconButtonProps> = ({
       textColor={textColor}
       size={size}
       animation={animation}
+      durationAnimation={durationAnimation}
+      variant={variant}
       type="button"
       style={style}
       onAnimationEnd={() => setClick(false)}
+      aria-label="iconButton"
       {...restprops}
     >
       {rippleEffect && isRippling && (
@@ -64,7 +69,7 @@ export const IconButton: FC<IconButtonProps> = ({
         />
       )}
 
-      {children}
+      <div className="eui__children">{children}</div>
     </IconButtonStyle>
   )
 }
