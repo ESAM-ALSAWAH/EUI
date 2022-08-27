@@ -27,10 +27,6 @@ export const Image: React.FC<ImageProps> = ({
       style={{
         ...styles?.wrapperImage,
         ...style,
-        ...(isError && {
-          display: 'grid',
-          placeItems: 'center',
-        }),
       }}
     >
       {loadingType === 'spinner' && (
@@ -69,8 +65,6 @@ export const Image: React.FC<ImageProps> = ({
           style={{
             width: '100%',
             height: '100%',
-            display: 'grid',
-            placeItems: 'center',
           }}
         >
           {!isError ? (

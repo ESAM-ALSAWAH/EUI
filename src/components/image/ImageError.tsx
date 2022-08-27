@@ -6,8 +6,10 @@ export const ImageError = () => {
       style={{
         width: '55%',
         height: '100%',
-        display: 'grid',
-        placeItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 'auto',
       }}
     >
       <svg
