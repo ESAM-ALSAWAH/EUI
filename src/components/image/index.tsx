@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ImageProps } from './images.types'
 import { WraaperImage } from './image.style'
 import { Skeleton } from '../skeleton'
-
+import { ImageError } from './ImageError'
 export const Image: React.FC<ImageProps> = ({
   src,
   loading,
@@ -38,30 +38,29 @@ export const Image: React.FC<ImageProps> = ({
           {isError
             ? false
             : isLoading && <div className="eui__spinner__image"></div>}
-          <img
-            src={src}
-            alt={alt}
-            loading={loading}
-            width={width}
-            height={height}
-            style={{
-              ...styles?.image,
-              ...(isLoading &&
-                !isError && {
-                  width: '0',
-                  height: '0',
-                }),
-              ...(isError && {
-                width: '55%',
-              }),
-            }}
-            onLoad={LoadImage}
-            onError={({ currentTarget }) => {
-              currentTarget.onerror = null // prevents looping
-              currentTarget.src = './not-found.svg'
-              ErrorImage()
-            }}
-          />
+          {!isError ? (
+            <img
+              src={src}
+              alt={alt}
+              loading={loading}
+              width={width}
+              height={height}
+              style={{
+                ...styles?.image,
+                ...(isLoading &&
+                  !isError && {
+                    width: '0',
+                    height: '0',
+                  }),
+              }}
+              onLoad={LoadImage}
+              onError={({ currentTarget }) => {
+                ErrorImage()
+              }}
+            />
+          ) : (
+            <ImageError />
+          )}
         </>
       )}
       {loadingType === 'skeleton' && (
@@ -74,25 +73,24 @@ export const Image: React.FC<ImageProps> = ({
             placeItems: 'center',
           }}
         >
-          <img
-            src={src}
-            alt={alt}
-            loading={loading}
-            width={width}
-            height={height}
-            style={{
-              ...styles?.image,
-              ...(isError && {
-                width: '55%',
-              }),
-            }}
-            onLoad={LoadImage}
-            onError={({ currentTarget }) => {
-              currentTarget.onerror = null // prevents looping
-              currentTarget.src = './not-found.svg'
-              ErrorImage()
-            }}
-          />
+          {!isError ? (
+            <img
+              src={src}
+              alt={alt}
+              loading={loading}
+              width={width}
+              height={height}
+              style={{
+                ...styles?.image,
+              }}
+              onLoad={LoadImage}
+              onError={({ currentTarget }) => {
+                ErrorImage()
+              }}
+            />
+          ) : (
+            <ImageError />
+          )}
         </Skeleton>
       )}
     </WraaperImage>
